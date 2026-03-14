@@ -18,7 +18,7 @@ A lightweight mod that breaks the vanilla barriers, allowing you to create the u
 ---
 
 ### ⚠️ Heads Up: Useless Combos
-While you *can* put these together now, some enchants just don't work side-by-side. To keep things stable, the mod forces one to override the other:
+While you *can* put these together now, some enchants just don't work side-by-side. To keep things stable, the mod blocks these combinations from occurring:
 
 * **Fortune is disabled by Silk Touch:** You can't get extra drops from a block that hasn't been broken. Silk Touch takes priority, so your Fortune levels won't do anything.
 * **Channeling is disabled by Riptide:** You can't strike a mob with lightning if you're busy launching yourself into the air. Riptide wins this round.
