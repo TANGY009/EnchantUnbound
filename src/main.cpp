@@ -6,22 +6,22 @@
 
 #define LOG(...) __android_log_print(ANDROID_LOG_INFO, "EnchantUnbound", __VA_ARGS__)
 
-static int g_GroupOffset{};
+static int g_CompatibilityIDOffset{};
 
 // For Enchant::isCompatibleWith TridentChannelingEnchant::isCompatibleWith TridentRiptideEnchant::isCompatibleWith CrossbowEnchant::isCompatibleWith
-bool Enchant_isCompatibleWith(void* a1, uint8_t a2) {
-    int Group = *(int*)((uintptr_t)a1 + g_GroupOffset);
-    //LOG("Group=%d 1stAnvilSlot=%u", Group, a2);
-    if (Group == 2 && (a2 == 16 || a2 == 18)) {
-        if (a2 == 16) LOG("Blocked Silk Touch + Fortune!");
-        if (a2 == 18) LOG("Blocked Fortune + Silk Touch!");
+bool Enchant_isCompatibleWith(void* a1, uint8_t ID) {
+    int CompatibilityID = *(int*)((uintptr_t)a1 + g_CompatibilityIDOffset);
+    //LOG("CompatibilityID=%d 1stAnvilSlot=%u", CompatibilityID, ID);
+    if (CompatibilityID == 2 && (ID == 16 || ID == 18)) {
+        if (ID == 16) LOG("Blocked Silk Touch + Fortune!");
+        if (ID == 18) LOG("Blocked Fortune + Silk Touch!");
         return false;
     }
-    if ((Group == 0 || Group == 6) && (a2 == 30 || a2 == 31 || a2 == 32)) {
-        if (Group == 0 && a2 == 30) LOG("Blocked Riptide + Channeling!");
-        if (Group == 6 && a2 == 32) LOG("Blocked Channeling + Riptide!");
-        if (Group == 6 && a2 == 30) LOG("Blocked Riptide + Loyalty!");
-        if (Group == 6 && a2 == 31) LOG("Blocked Loyalty + Riptide!");
+    if ((CompatibilityID == 0 || CompatibilityID == 6) && (ID == 30 || ID == 31 || ID == 32)) {
+        if (CompatibilityID == 0 && ID == 30) LOG("Blocked Riptide + Channeling!");
+        if (CompatibilityID == 6 && ID == 32) LOG("Blocked Channeling + Riptide!");
+        if (CompatibilityID == 6 && ID == 30) LOG("Blocked Riptide + Loyalty!");
+        if (CompatibilityID == 6 && ID == 31) LOG("Blocked Loyalty + Riptide!");
         return false;
     }
     return true;
@@ -74,7 +74,7 @@ void HookCompatible() {
     };
     if (void** vt = FindVtable("14MendingEnchant")) {
         uintptr_t func = (uintptr_t)vt[2];
-        g_GroupOffset = ((*(uint32_t*)func >> 10) & 0xFFF) * 4;
+        g_CompatibilityIDOffset = ((*(uint32_t*)func >> 10) & 0xFFF) * 4;
         Redirect("14MendingEnchant", {2}, (uintptr_t)Enchant_isCompatibleWith);
     }
     Redirect("24TridentChannelingEnchant", {2}, (uintptr_t)Enchant_isCompatibleWith);
