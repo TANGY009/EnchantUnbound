@@ -28,15 +28,15 @@ bool Enchant_isCompatibleWith(void* a1, uint8_t ID) {
 }
 
 void** FindVtable(const char* cls) {
-    static uintptr_t rodata{}, drr{}, zts{}, zti{};
+    static uintptr_t rodata{}, drr{};
     static size_t rodataSize{}, drrSize{};
     if (!rodata) {
         rodata = GlossGetLibSection("libminecraftpe.so", ".rodata", &rodataSize);
         drr = GlossGetLibSection("libminecraftpe.so", ".data.rel.ro", &drrSize);
     }
     char* s = (char*)memmem((void*)rodata, rodataSize, cls, strlen(cls) + 1);
-    if (s) zts = (uintptr_t)s;
-    if (!zts) return nullptr;
+    if (!s) return nullptr;
+    uintptr_t zts = (uintptr_t)s, zti{};
     for (size_t i = 0; i < drrSize; i += sizeof(uintptr_t))
         if (*(uintptr_t*)(drr + i) == zts) {
             zti = drr + i - sizeof(uintptr_t);
