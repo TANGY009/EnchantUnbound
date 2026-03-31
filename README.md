@@ -30,7 +30,7 @@ While you *can* put these together now, some enchants just don't work side-by-si
 If you prefer to have absolutely no restrictions at all—even for the combinations listed above—you can fork the mod and modify `Enchant_isCompatibleWith` in the main.cpp like this :
 
 ```c
-bool Enchant_isCompatibleWith(void* a1, uint8_t a2) {
+bool Enchant_isCompatibleWith(void* a1, uint8_t ID) {
     return true;
 }
 ```
