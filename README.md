@@ -6,10 +6,10 @@ A lightweight mod that breaks the vanilla barriers, allowing you to create the u
 
 ### 🛡️ Core Features
 * **Ultimate Protection:** Stack Protection, Projectile Protection, Fire Protection, and Blast Protection all on one piece.
-* **The God Sword:** Stack **Sharpness**, **Bane of Arthropods**, and **Smite** on a single sword.
-* **The God Table:** Enchantment tables now grant these "conflicting" combos naturally.
-* **Perfect Bows:** Run **Mending** and **Infinity** together for infinite power that never breaks.
-* **True Crossbows:** Combine **Piercing** and **Multishot** for ultimate crowd control.
+* **The Ultimate Sword:** Stack **Sharpness**, **Bane of Arthropods**, and **Smite** on a single sword.
+* **The Enchantment Table:** Enchantment tables now grant these conflicting combinations of enchantments naturally.
+* **Perfect Bows:** Put **Mending** and **Infinity** together on your bow, for true, Infinite Power.
+* **OP Crossbows:** Combine **Piercing** and **Multishot** for ultimate crowd control.
 
 ---
 
@@ -17,8 +17,8 @@ A lightweight mod that breaks the vanilla barriers, allowing you to create the u
 
 ---
 
-### ⚠️ Heads Up: Useless Combos
-While you *can* put these together now, some enchants just don't work side-by-side. To keep things stable, the mod blocks these combinations from occurring:
+### ⚠️ Useless Combinations
+While you *can* put these together now, some enchants just don't work side-by-side. I have peronally tested every conflicting combination to ensure a perfect experience for Survival Players. To keep things stable, **the mod blocks these combinations from occurring:**
 
 * **Fortune is disabled by Silk Touch:** You can't get extra drops from a block that hasn't been broken. Silk Touch takes priority, so your Fortune levels won't do anything.
 * **Channeling is disabled by Riptide:** You can't strike a mob with lightning if you're busy launching yourself into the air.
