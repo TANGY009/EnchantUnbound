@@ -47,3 +47,5 @@ bool Enchant_isCompatibleWith(void* a1, uint8_t ID) {
 
 ## 📜 License
 - This project is licensed under the GNU LGPL v3.0.
+- It also uses the GlossHook library licensed under the MIT License.
+- See the NOTICE file for details.
