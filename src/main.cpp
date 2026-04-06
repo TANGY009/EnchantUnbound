@@ -2,7 +2,7 @@
 #include <cstring>
 #include <initializer_list>
 #include <android/log.h>
-#include "pl/Gloss.h"
+#include "Gloss.h"
 
 #define LOG(...) __android_log_print(ANDROID_LOG_INFO, "EnchantUnbound", __VA_ARGS__)
 

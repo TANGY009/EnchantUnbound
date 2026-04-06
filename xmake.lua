@@ -9,14 +9,17 @@ add_cxflags("-O2", "-fvisibility=hidden", "-ffunction-sections", "-fdata-section
 add_ldflags("-Wl,--gc-sections", "-Wl,--strip-all", "-s")
 
 add_repositories(
-    "xmake-repo https://github.com/xmake-io/xmake-repo.git",
-    "levimc-repo https://github.com/LiteLDev/xmake-repo.git"
+    "xmake-repo https://github.com/xmake-io/xmake-repo.git"
 )
-
-add_requires("preloader_android 0.1.14")
 
 target("EnchantUnbound")
     set_kind("shared")
     add_files("src/main.cpp")
-    add_packages("preloader_android")
-    add_links("log")
+    add_includedirs("src")
+    if is_arch("arm64-v8a") then
+        add_linkdirs("lib/ARM64")
+    elseif is_arch("armeabi-v7a") then
+        add_linkdirs("lib/ARM")
+    end
+    
+    add_links("GlossHook", "log")
