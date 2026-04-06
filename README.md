@@ -42,7 +42,7 @@ bool Enchant_isCompatibleWith(void* a1, uint8_t ID) {
 ## 🛠️ Installation
 
 - Install LeviLauncher
-- Import AnarchyArray mod in LeviLauncher by doing "Manage Mods > Add Mod"
+- Import EnchantUnbound mod in LeviLauncher by doing "Manage Mods > Add Mod"
 - Launch Minecraft with the mod activated
 
 ## 📜 License
