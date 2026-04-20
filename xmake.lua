@@ -1,5 +1,5 @@
 set_project("EnchantUnbound")
-set_version("1.0.0")
+set_version("1.1.0")
 
 set_languages("cxx23")
 
