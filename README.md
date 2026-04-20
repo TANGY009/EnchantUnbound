@@ -37,7 +37,8 @@ bool Enchant_isCompatibleWith(void* a1, uint8_t ID) {
 
 ## ⚙️ Requirements
 
-- 🚀 [LeviLauncher](https://github.com/LiteLDev/LeviLaunchroid)
+- 🚀 [LeviLaunchroid](https://github.com/LiteLDev/LeviLaunchroid) for android
+- 🚀 [LeviLauncher](https://github.com/LiteLDev/LeviLauncher) for windows
 
 ## 🛠️ Installation
 
