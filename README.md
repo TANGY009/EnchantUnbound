@@ -46,6 +46,7 @@ bool Enchant_isCompatibleWith(void* a1, uint8_t ID) {
 - Launch Minecraft with the mod activated
 
 ## 📜 License
-- This project is licensed under the GNU LGPL v3.0.
+- The Android source code is licensed under GNU LGPL v3.0.
+- The Windows version is proprietary and closed source. No source code is provided; all rights reserved.
 - It also uses the GlossHook library licensed under the MIT License.
 - See the NOTICE file for details.
