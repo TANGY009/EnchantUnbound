@@ -1,4 +1,4 @@
-# ✨ EnchantUnbound
+# ✨ EnchantUnbound ![Downloads](https://img.shields.io/github/downloads/TANGY009/EnchantUnbound/total.svg?label=Downloads&color=blue&style=for-the-badge) 
 
 A lightweight mod that breaks the vanilla barriers, allowing you to create the ultimate god-tier gear. No more choosing between power and utility—have it all.
 
