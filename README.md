@@ -18,7 +18,7 @@ A lightweight mod that breaks the vanilla barriers, allowing you to create the u
 ---
 
 ### ⚠️ Useless Combinations
-While you *can* put these together now, some enchants just don't work side-by-side. I have peronally tested every conflicting combination to ensure a perfect experience for Survival Players. To keep things stable, **the mod blocks these combinations from occurring:**
+While you *can* put these together now, some enchants just don't work side-by-side. I have personally tested every conflicting combination to ensure a perfect experience for Survival Players. To keep things stable, **the mod blocks these combinations from occurring:**
 
 * **Fortune is disabled by Silk Touch:** You can't get extra drops from a block that hasn't been broken. Silk Touch takes priority, so your Fortune levels won't do anything.
 * **Channeling is disabled by Riptide:** You can't strike a mob with lightning if you're busy launching yourself into the air.
@@ -27,27 +27,27 @@ While you *can* put these together now, some enchants just don't work side-by-si
 ---
 
 ### ⚙️ Total Freedom
-If you prefer to have absolutely no restrictions at all—even for the combinations listed above—you can fork the mod and modify `Enchant_isCompatibleWith` in the main.cpp like this :
+If you prefer to have absolutely no restrictions at all—even for the combinations listed above—you can fork the mod and modify `Enchant::isCompatibleWith` in the main.cpp like this :
 
 ```c
-bool Enchant_isCompatibleWith(void* a1, uint8_t ID) {
-    return true;
+namespace Enchant {
+    
+    bool isCompatibleWith(void* a1, uint8_t ID) {
+        return true;
+    }
+    
 }
 ```
 
 ## ⚙️ Requirements
 
-- 🚀 [LeviLaunchroid](https://github.com/LiteLDev/LeviLaunchroid) for android
-- 🚀 [LeviLauncher](https://github.com/LiteLDev/LeviLauncher) for windows
-
-## 🛠️ Installation
-
-- Install LeviLauncher
-- Import EnchantUnbound mod in LeviLauncher by doing "Manage Mods > Add Mod"
-- Launch Minecraft with the mod activated
+| 🖥️ Platform | 🛠️ Recommended Tool |
+| :--- | :--- |
+| 🚀 **Android** | [Ambient](https://play.google.com/store/apps/details?id=io.kitsuri.mayape) or [LeviLaunchroid](https://github.com/LiteLDev/LeviLaunchroid) |
+| 🚀 **Windows Client** | [LeviLauncher](https://github.com/LiteLDev/LeviLauncher) (or any DLL injector, e.g., [FateInjector](https://github.com/crazyperson95/FateInjector)) |
+| 🚀 **Windows Server** | [LeviLamina](https://github.com/LiteLDev/LeviLamina) or any DLL injector, e.g., [FateInjector](https://github.com/crazyperson95/FateInjector) |
 
 ## 📜 License
-- The Android source code is licensed under GNU LGPL v3.0.
-- The Windows version is proprietary and closed source. No source code is provided; all rights reserved.
-- It also uses the GlossHook library licensed under the MIT License.
-- See the NOTICE file for details.
+- The project source code is licensed under GNU [LGPL v3.0](https://www.gnu.org/licenses/lgpl-3.0.html).
+- See the [NOTICE](NOTICE) file for details.
+- This project incorporates code from [length-disassembler](https://github.com/gh-nomad/length-disassembler), which remains the property of its respective author.

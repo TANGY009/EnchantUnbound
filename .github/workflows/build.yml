@@ -5,7 +5,33 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          # Android Build (Untouched)
+          - os: ubuntu-latest
+            platform: android
+            arch: arm64-v8a
+            target_path: build/android/arm64-v8a/release/libEnchantUnbound.so
+            artifact_name: EnchantUnbound-android-arm64
+          
+          # Windows Release
+          - os: windows-latest
+            platform: windows
+            arch: x64
+            dev: n
+            target_path: build/windows/x86_64/release/EnchantUnbound.dll
+            artifact_name: EnchantUnbound-release-windows-x64
+            
+          # Windows Debug (Dev)
+          - os: windows-latest
+            platform: windows
+            arch: x64
+            dev: y
+            target_path: build/windows/x86_64/debug/EnchantUnbound.dll
+            artifact_name: EnchantUnbound-debug-windows-x64
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v4
@@ -13,6 +39,7 @@ jobs:
           submodules: recursive
 
       - name: Setup Android NDK
+        if: matrix.platform == 'android'
         uses: nttld/setup-ndk@v1
         with:
           ndk-version: r27d
@@ -24,11 +51,15 @@ jobs:
 
       - name: Configure and Build
         run: |
-          xmake f -p android -a arm64-v8a --ndk=$ANDROID_NDK_HOME -m release -y
+          if [ "${{ matrix.platform }}" == "android" ]; then
+            xmake f -p android -a ${{ matrix.arch }} --ndk=$ANDROID_NDK_HOME -m release -y
+          else
+            xmake f -p windows -a ${{ matrix.arch }} -m release --dev=${{ matrix.dev }} -y
+          fi
           xmake -y
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: libEnchantUnbound
-          path: build/android/arm64-v8a/release/libEnchantUnbound.so
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.target_path }}
