@@ -44,8 +44,8 @@ namespace Enchant {
 | 🖥️ Platform | 🛠️ Recommended Tool |
 | :--- | :--- |
 | 🚀 **Android** | [Ambient](https://play.google.com/store/apps/details?id=io.kitsuri.mayape) or [LeviLaunchroid](https://github.com/LiteLDev/LeviLaunchroid) |
-| 🚀 **Windows Client** | [LeviLauncher](https://github.com/LiteLDev/LeviLauncher) (or any DLL injector, e.g., [FateInjector](https://github.com/crazyperson95/FateInjector)) |
-| 🚀 **Windows Server** | [LeviLamina](https://github.com/LiteLDev/LeviLamina) or any DLL injector, e.g., [FateInjector](https://github.com/crazyperson95/FateInjector) |
+| 🚀 **Windows Client** | [LeviLauncher](https://github.com/LiteLDev/LeviLauncher) (or any DLL injector, e.g., [FateInjector](https://github.com/fligger/FateInjector)) |
+| 🚀 **Windows Server** | [LeviLamina](https://github.com/LiteLDev/LeviLamina) or any DLL injector, e.g., [FateInjector](https://github.com/fligger/FateInjector) |
 
 ## 📜 License
 - The project source code is licensed under GNU [LGPL v3.0](https://www.gnu.org/licenses/lgpl-3.0.html).
