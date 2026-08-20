@@ -14,7 +14,14 @@ jobs:
             arch: arm64-v8a
             target_path: build/android/arm64-v8a/release/libEnchantUnbound.so
             artifact_name: EnchantUnbound-android-arm64
-          
+            
+          # Android x86-x64 Buiid
+          - os: ubuntu-latest
+            platform: android
+            arch: x86_64
+            target_path: build/android/x86_64/release/libEnchantUnbound.so
+            artifact_name: EnchantUnbound-android-x86
+            
           # Windows Release
           - os: windows-latest
             platform: windows
