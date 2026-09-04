@@ -1,16 +1,23 @@
 # ✨ EnchantUnbound ![Downloads](https://img.shields.io/github/downloads/TANGY009/EnchantUnbound/total.svg?label=Downloads&color=blue&style=for-the-badge) 
 
-A Minecraft Bedrock mod that breaks the vanilla barriers, allowing you to create the ultimate god-tier gear. No more choosing between power and utility—have it all.
+A Minecraft Bedrock mod that removes the vanilla barriers, allowing the incompatible combinations of enchantments possible.
 
 ---
 
-### 🛡️ Core Features
-* **Ultimate Protection:** Stack Protection, Projectile Protection, Fire Protection, and Blast Protection all on one piece.
-* **The Ultimate Sword:** Stack **Sharpness**, **Bane of Arthropods**, and **Smite** on a single sword.
-* **The Enchantment Table:** Enchantment tables now grant these conflicting combinations of enchantments naturally.
-* **Perfect Bows:** Put **Mending** and **Infinity** together on your bow, for true, Infinite Power.
-* **OP Crossbows:** Combine **Piercing** and **Multishot** for ultimate crowd control.
+## 🛡️ Features
+### Before (Vanilla)
+* **Armor:** Choose only *one* — Protection, Projectile Protection, Fire Protection, or Blast Protection
+* **Weapon:** Choose only *one* — Sharpness, Bane of Arthropods, or Smite
+* **Bow:** Choose only *one* — Mending or Infinity
+* **Crossbow:** Choose only *one* — Piercing or Multishot
+* **Mace:** Choose only *one* — Density or Breach
 
+### After (EnchantUnbound)
+* **Armor:** Combine Protection **+** Projectile Protection **+** Fire Protection **+** Blast Protection
+* **Weapon:** Combine Sharpness **+** Bane of Arthropods **+** Smite
+* **Bow:** Combine Mending **+** Infinity
+* **Crossbow:** Combine Piercing **+** Multishot
+* **Mace:** Combine Density **+** Breach
 ---
 
 ![Showcase Image](assets/image1.jpeg)
@@ -27,7 +34,7 @@ While you *can* put these together now, some enchants just don't work side-by-si
 ---
 
 ### ⚙️ Total Freedom
-If you prefer to have absolutely no restrictions at all—even for the combinations listed above—you can fork the mod and modify `Enchant::isCompatibleWith` in the main.cpp like this :
+If you prefer to have absolutely no restrictions at all—even for the combinations listed above—you can fork the mod and modify `Enchant::isCompatibleWith` in the `main.cpp` like this :
 
 ```c
 namespace Enchant {
