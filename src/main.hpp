@@ -16,16 +16,19 @@
 #include "idisasm.hpp"
 #endif
 
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__linux__)
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <dlfcn.h>
 #include <fcntl.h>
+#include <elf.h>
 #include <link.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <limits.h>
+#include <strings.h>
 #endif
 
 #ifdef _WIN32

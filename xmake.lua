@@ -1,5 +1,5 @@
 set_project("EnchantUnbound")
-set_version("1.1.1")
+set_version("1.1.2")
 
 add_rules("mode.release")
 add_repositories("xmake-repo https://github.com/xmake-io/xmake-repo.git")
@@ -29,6 +29,7 @@ target("EnchantUnbound")
         
         local suffix = has_config("dev") and "debug" or "release"
         set_targetdir("build/windows/x86_64/" .. suffix)
+        set_filename("windows-x86_64-EnchantUnbound.dll")
 
     elseif is_plat("android") then
         set_languages("cxx23")
@@ -36,4 +37,17 @@ target("EnchantUnbound")
         
         add_cxflags("-O2", "-fvisibility=hidden", "-ffunction-sections", "-fdata-sections", "-flto", "-w")
         add_ldflags("-Wl,--gc-sections", "-Wl,--strip-all", "-Wl,-z,max-page-size=16384", "-s")
+        
+        if get_config("arch") == "arm64-v8a" then
+            set_filename("android-arm64-EnchantUnbound.so")
+        elseif get_config("arch") == "x86_64" then
+            set_filename("android-x86_64-EnchantUnbound.so")
+        end
+
+    elseif is_plat("linux") then
+        set_languages("cxx23")
+        add_cxflags("-O2", "-fvisibility=hidden", "-ffunction-sections", "-fdata-sections", "-flto", "-w")
+        add_ldflags("-Wl,--gc-sections", "-Wl,--strip-all", "-s")
+        
+        set_filename("linux-x86_64-EnchantUnbound.so")
     end

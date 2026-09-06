@@ -12,8 +12,8 @@ namespace Utils {
     
     void BuildCache();
 
-    inline uintptr_t ToFileOffset(uintptr_t runtimeAddr) {
-        return runtimeAddr - g_base;
+    inline uintptr_t ToRVA(uintptr_t runtimeAddr) {
+        return runtimeAddr - g_base + 0x140000000;
     }
     
     inline bool IsInTextSection(uintptr_t addr) {

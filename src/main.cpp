@@ -26,7 +26,7 @@ namespace Enchant {
     
 }
 
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__linux__)
 uintptr_t GetLibSection(const char* libname, const char* section_name, size_t* out_size) {
     if (!libname) return 0;
     if (!section_name) section_name = ".text";
@@ -113,9 +113,15 @@ void** FindVtable(const char* typeStr) {
     static size_t rodataSize{}, drrSize{};
     
     if (!rodata) {
-        rodata = GetLibSection("libminecraftpe.so", ".rodata", &rodataSize);
-        drr = GetLibSection("libminecraftpe.so", ".data.rel.ro", &drrSize);
-        
+    #if defined(__ANDROID__)
+        const char* module = "libminecraftpe.so";
+    #elif defined(__linux__)
+        const char* module = "bedrock_server";
+    #endif
+    
+        rodata = GetLibSection(module, ".rodata", &rodataSize);
+        drr = GetLibSection(module, ".data.rel.ro", &drrSize);
+    
         Dl_info info;
         if (dladdr((void*)rodata, &info)) {
             libBase = (uintptr_t)info.dli_fbase;
@@ -171,16 +177,22 @@ void** FindVtable(const char* typeStr) {
     if (!vtable) return nullptr;
 
     if (libBase)
-        LOG("[Find] %s -> ZTS: 0x%lX | ZTI: 0x%lX | ZTV: 0x%lX", typeStr, zts - libBase, zti - libBase, vtable - libBase);
+        LOG("%s -> ZTS: 0x%lX | ZTI: 0x%lX | ZTV: 0x%lX", typeStr, zts - libBase, zti - libBase, vtable - libBase);
     else
-        LOG("[Find] %s -> ZTS: .rodata+0x%zX | ZTI: .data.rel.ro+0x%zX | ZTV: .data.rel.ro+0x%zX", typeStr, (size_t)(zts - rodata), (size_t)(zti - drr), (size_t)(vtable - drr));
+        LOG("%s -> ZTS: .rodata+0x%zX | ZTI: .data.rel.ro+0x%zX | ZTV: .data.rel.ro+0x%zX", typeStr, (size_t)(zts - rodata), (size_t)(zti - drr), (size_t)(vtable - drr));
         
     return (void**)vtable;
 }
 
 void HookCompatible() {
+#if defined(__ANDROID__)
+    const char* module = "libminecraftpe.so";
+#elif defined(__linux__)
+    const char* module = "bedrock_server";
+#endif
+
     size_t drrSize{};
-    uintptr_t drr = GetLibSection("libminecraftpe.so", ".data.rel.ro", &drrSize);
+    uintptr_t drr = GetLibSection(module, ".data.rel.ro", &drrSize);
     uintptr_t end = drr + drrSize;
     int replaced{};
 
@@ -249,7 +261,10 @@ void HookCompatible() {
 
 __attribute__((constructor))
 void Init() {
-    LOG("EnchantUnbound Loaded");
+    HookCompatible();
+}
+
+extern "C" [[gnu::visibility("default")]] void mod_init() {
     HookCompatible();
 }
 #endif
@@ -289,8 +304,6 @@ void Init() {
         {"enchantment.tridentChanneling", sizeof("enchantment.tridentChanneling") - 1},
         {"enchantment.tridentRiptide", sizeof("enchantment.tridentRiptide") - 1}
     };
-    
-    LOG("EnchantUnbound Initialization");
     
     auto startTime = std::chrono::high_resolution_clock::now();
     std::atomic<int> totalReferences{0};

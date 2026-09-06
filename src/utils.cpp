@@ -73,7 +73,7 @@ namespace Scanner {
                 int32_t disp = *(int32_t*)(cur + 3);
                 uintptr_t vt = (uintptr_t)cur + 7 + disp;
                 if (Utils::IsValidVtable(vt)) {
-                    LOGD("   |-- [Special] Actual Vftable found at IDA: %llX", Utils::ToFileOffset((uintptr_t)cur));
+                    LOGD("   |-- [Special] Actual Vftable found at IDA: %llX", Utils::ToRVA((uintptr_t)cur));
                     return (uintptr_t)cur;
                 }
             }
@@ -90,7 +90,7 @@ namespace Scanner {
             if (instLen == 0) break;
 
             if (*cur == 0xC3 || *cur == 0xCB) {
-                LOGD("%s-- RETN stopper hit: %llX", indent, Utils::ToFileOffset((uintptr_t)cur));
+                LOGD("%s-- RETN stopper hit: %llX", indent, Utils::ToRVA((uintptr_t)cur));
                 break;
             }
 
@@ -98,9 +98,9 @@ namespace Scanner {
                 int32_t disp = *(int32_t*)(cur + 3);
                 uintptr_t vt = (uintptr_t)cur + 7 + disp;
                 if (Utils::IsValidVtable(vt)) {
-                    LOGD("%s-- Vftable LEA found at IDA: %llX", indent, Utils::ToFileOffset((uintptr_t)cur));
+                    LOGD("%s-- Vftable LEA found at IDA: %llX", indent, Utils::ToRVA((uintptr_t)cur));
                     LOGD("%s   |-- [HEX] %02X %02X %02X %02X %02X %02X %02X", indent, cur[0], cur[1], cur[2], cur[3], cur[4], cur[5], cur[6]);
-                    LOGD("%s-- Address of the Vftable: %llX", indent, Utils::ToFileOffset(vt));
+                    LOGD("%s-- Address of the Vftable: %llX", indent, Utils::ToRVA(vt));
                     return (uintptr_t)cur;
                 }
             }
@@ -143,11 +143,11 @@ namespace Scanner {
                 uint8_t imm = *(cur + 3);
                 if (imm == 0x10 || imm == 0x0F) {
                     foundSSO = true;
-                    LOGD("   |-- SSO Signature detected at %llX. Loosening safety stoppers.", Utils::ToFileOffset((uintptr_t)cur));
+                    LOGD("   |-- SSO Signature detected at %llX. Loosening safety stoppers.", Utils::ToRVA((uintptr_t)cur));
                 }
             }
             if (*cur == 0xC3 || *cur == 0xCB) {
-                LOGD("   |-- RETN stopper hit: %llX", Utils::ToFileOffset((uintptr_t)cur));
+                LOGD("   |-- RETN stopper hit: %llX", Utils::ToRVA((uintptr_t)cur));
                 break;
             }
             cur += instLen;
@@ -156,20 +156,20 @@ namespace Scanner {
         LOGD("   |-- Scan Completed");
         LOGD("   |   |-- Found Vftable Lea : %s", foundVt ? "Yes" : "No");
         if (foundVt) {
-            LOGD("   |   |   |-- Found at %llX", Utils::ToFileOffset(foundVt));
+            LOGD("   |   |   |-- Found at %llX", Utils::ToRVA(foundVt));
             LOGD("   |   |   |-- [HEX] %02X %02X %02X %02X %02X %02X %02X", ((uint8_t*)foundVt)[0], ((uint8_t*)foundVt)[1], ((uint8_t*)foundVt)[2], ((uint8_t*)foundVt)[3], ((uint8_t*)foundVt)[4], ((uint8_t*)foundVt)[5], ((uint8_t*)foundVt)[6]);
         }
         LOGD("   |   |-- Found Function Call : %s", foundCall ? "Yes" : "No");
         if (foundCall) {
-            LOGD("   |   |   |-- Found at %llX", Utils::ToFileOffset((uintptr_t)callInst));
+            LOGD("   |   |   |-- Found at %llX", Utils::ToRVA((uintptr_t)callInst));
             LOGD("   |   |   |-- [HEX] %02X %02X %02X %02X %02X %02X", callInst[0], callInst[1], callInst[2], callInst[3], callInst[4], callInst[5]);
         }
         
         if (foundVt) {
             int32_t disp = *(int32_t*)((uint8_t*)foundVt + 3);
             uintptr_t vt = (uintptr_t)foundVt + 7 + disp;
-            LOGD("   |-- Vftable LEA found at IDA: %llX", Utils::ToFileOffset(foundVt));
-            LOGD("   |-- Address of the Vftable: %llX", Utils::ToFileOffset(vt));
+            LOGD("   |-- Vftable LEA found at IDA: %llX", Utils::ToRVA(foundVt));
+            LOGD("   |-- Address of the Vftable: %llX", Utils::ToRVA(vt));
             return foundVt;
         }
         if (foundCall) {
@@ -190,7 +190,7 @@ namespace Scanner {
                         int32_t offset = *(int32_t*)(curSub + 1);
                         uintptr_t dest = (uintptr_t)curSub + 5 + offset;
                         if (dest > g_base && dest < g_moduleEnd) {
-                            LOGD("   |   |-- Sub-call: %llX", Utils::ToFileOffset(dest));
+                            LOGD("   |   |-- Sub-call: %llX", Utils::ToRVA(dest));
                             uintptr_t nested = ScanSub((uint8_t*)dest, "   |   |   |");
                             if (nested) return nested;
                         }
