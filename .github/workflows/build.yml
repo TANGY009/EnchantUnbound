@@ -5,32 +5,57 @@ on:
 
 jobs:
   build:
+    name: ${{ matrix.name }}
+
     strategy:
       matrix:
         include:
-          # Android Build (Untouched)
-          - os: ubuntu-latest
+          # Android arm64
+          - name: Android arm64
+            os: ubuntu-latest
             platform: android
             arch: arm64-v8a
-            target_path: build/android/arm64-v8a/release/libEnchantUnbound.so
-            artifact_name: EnchantUnbound-android-arm64
-          
-          # Windows Release
-          - os: windows-latest
+            target_path: build/android/arm64-v8a/release/android-arm64-EnchantUnbound.so
+            artifact_name: android-arm64-EnchantUnbound
+
+          # Android x86_64
+          - name: Android x86_64
+            os: ubuntu-latest
+            platform: android
+            arch: x86_64
+            target_path: build/android/x86_64/release/android-x86_64-EnchantUnbound.so
+            artifact_name: android-x86_64-EnchantUnbound
+
+          # Linux x86_64
+          - name: Linux x86_64
+            os: ubuntu-latest
+            platform: linux
+            arch: x86_64
+            target_path: build/linux/x86_64/release/linux-x86_64-EnchantUnbound.so
+            artifact_name: linux-x86_64-EnchantUnbound
+
+          # Windows x86_64
+          - name: Windows x86_64
+            os: windows-latest
             platform: windows
             arch: x64
             dev: n
-            target_path: build/windows/x86_64/release/EnchantUnbound.dll
-            artifact_name: EnchantUnbound-release-windows-x64
+            target_path: |
+              build/windows/x86_64/release/windows-x86_64-EnchantUnbound.dll
+              build/windows/x86_64/release/windows-x86_64-EnchantUnbound.pdb
+            artifact_name: windows-x86_64-EnchantUnbound
             
-          # Windows Debug (Dev)
-          - os: windows-latest
+          # Windows x86_64 Dev
+          - name: Windows x86_64 Dev
+            os: windows-latest
             platform: windows
             arch: x64
             dev: y
-            target_path: build/windows/x86_64/debug/EnchantUnbound.dll
-            artifact_name: EnchantUnbound-debug-windows-x64
-
+            target_path: |
+              build/windows/x86_64/debug/windows-x86_64-EnchantUnbound.dll
+              build/windows/x86_64/debug/windows-x86_64-EnchantUnbound.pdb
+            artifact_name: windows-x86_64-EnchantUnbound-dev
+            
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -42,7 +67,7 @@ jobs:
         if: matrix.platform == 'android'
         uses: nttld/setup-ndk@v1
         with:
-          ndk-version: r27d
+          ndk-version: r29
 
       - name: Setup xmake
         uses: xmake-io/github-action-setup-xmake@v1
@@ -50,12 +75,16 @@ jobs:
           xmake-version: latest
 
       - name: Configure and Build
+        shell: bash
         run: |
           if [ "${{ matrix.platform }}" == "android" ]; then
             xmake f -p android -a ${{ matrix.arch }} --ndk=$ANDROID_NDK_HOME -m release -y
+          elif [ "${{ matrix.platform }}" == "linux" ]; then
+            xmake f -p linux -a ${{ matrix.arch }} -m release -y
           else
             xmake f -p windows -a ${{ matrix.arch }} -m release --dev=${{ matrix.dev }} -y
           fi
+
           xmake -y
 
       - name: Upload Artifact
